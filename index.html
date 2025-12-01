@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cessy Creates</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <nav class="navbar">
+    <div class="logo">Cessy Cooks</div>
+
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#specials">Specials</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a class="order-btn" href="#order">Order Now</a></li>
+    </ul>
+  </nav>
+</header>
+<section class="hero-video">
+  <video autoplay loop muted playsinline>
+    <source src="Black Green Modern Food Channel Video (2).mp4" type="video/mp4">
+  </video>
+
+  <div class="overlay"></div>
+
+  <div class="hero-text">
+    <a href="#menu" class="btn">Order Now</a>
+  </div>
+</section>
+<section id="menu" class="menu-section">
+  <h2 class="menu-title">Our Menu</h2>
+
+  <div class="menu-container">
+    <div class="menu-card">
+      <img src="Quick Beef Chow Mein Recipe.jfif" alt="noodles stir fried">
+      <div class="menu-info">
+        <h3>Noodles stir-fried</h3>
+        <p>Fragrant spicy noodles stir fried.</p>
+        <p class="menu-price">GHS 35</p>
+        <button class="order-now" onclick="addToOrder('Fried Rice', 45)">
+  Order Now
+</button>
+
+      </div>
+    </div>
+
+    <div class="menu-card">
+      <img src="My grilled Sweet Barbecue Chicken Legs recipe is….jfif" alt="Grilled Chicken">
+      <div class="menu-info">
+        <h3>Grilled Chicken</h3>
+        <p>Juicy charcoal-grilled chicken with sides.</p>
+        <p class="menu-price">GHS 45</p>
+        <button class="order-now" onclick="addToOrder('Fried Rice', 45)">
+  Order Now
+</button>
+
+      </div>
+    </div>
+     <div class="menu-card">
+      <img src="My grilled Sweet Barbecue Chicken Legs recipe is….jfif" alt="Grilled Chicken">
+      <div class="menu-info">
+        <h3>Grilled Chicken</h3>
+        <p>Juicy charcoal-grilled chicken with sides.</p>
+        <p class="menu-price">GHS 45</p>
+        <button class="order-now" onclick="addToOrder('Fried Rice', 45)">
+  Order Now
+</button>
+
+      </div>
+    </div>
+     <div class="menu-card">
+      <img src="_Would you eat this savory stir-fry_ Quick….jfif" alt="Spaghetti stir fried">
+      <div class="menu-info">
+        <h3>Spaghetti stir fried</h3>
+        <p>Spaghetti stir fried.</p>
+        <p class="menu-price">GHS 45</p>
+        <button class="order-now" onclick="addToOrder('Fried Rice', 45)">
+  Order Now
+</button>
+
+      </div>
+    </div>
+
+
+    <div class="menu-card">
+      <img src="Baked Jollof Rice - KikiFoodies.jfif" alt="Jollof Rice">
+      <div class="menu-info">
+        <h3>Jollof Rice</h3>
+        <p>Delicious Jollof rice served chicken.</p>
+        <p class="menu-price">GHS 40</p>
+        <button class="order-now" onclick="addToOrder('Fried Rice', 45)">
+  Order Now
+</button>
+
+      </div>
+    </div>
+
+    <div class="menu-card">
+      <img src="Easy Beef Fried Rice Recipe for Quick Dinner –….jfif" alt="Beef Stir Fried rice">
+      <div class="menu-info">
+        <h3>Beef Stir Fry</h3>
+        <p>Savory stir-fried rice with beef and vegetables.</p>
+        <p class="menu-price">GHS 42</p>
+        <button class="order-now" onclick="addToOrder('Fried Rice', 45)">
+  Order Now
+</button>
+
+      </div>
+    </div>
+
+    <div class="menu-card">
+      <img src="Baked Chicken Wings - WeArtSite.jfif" alt="Chicken Wings">
+      <div class="menu-info">
+        <h3>Chicken Wings</h3>
+        <p>Crispy chicken wings with a spicy glaze.</p>
+        <p class="menu-price">GHS 30</p>
+        <button class="order-now" onclick="addToOrder('Fried Rice', 45)">
+  Order Now
+</button>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="specials" class="specials-section">
+  <h2 class="section-title">Chef’s Specials</h2>
+
+  <div class="specials-container">
+    <div class="special-card">
+      <div class="badge">Special</div>
+      <img src="Yogurt Blue Coral Café.jfif" alt="Yoghurt Bowl">
+      <div class="special-info">
+        <h3>Yoghurt Bowl</h3>
+        <p>Special Yoghurt bowl with granola and fruits</p>
+        <p class="special-price">GHS 50</p>
+        <button class="order-now" onclick="addToOrder('Fried Rice', 45)">
+  Order Now
+</button>
+
+      </div>
+    </div>
+
+    <div class="special-card">
+      <div class="badge">Special</div>
+      <img src="Quick & Easy English Muffin Pizzas.jfif" alt="Mini pizza">
+      <div class="special-info">
+        <h3>Mini Pizza</h3>
+        <p>Special all season pizza</p>
+        <p class="special-price">GHS 95</p>
+        <button class="order-now" onclick="addToOrder('Fried Rice', 45)">
+  Order Now
+</button>
+
+      </div>
+    </div>
+     <div class="special-card">
+      <div class="badge">Special</div>
+      <img src="Quick & Easy English Muffin Pizzas.jfif" alt="Mini pizza">
+      <div class="special-info">
+        <h3>Mini Pizza</h3>
+        <p>Special all season pizza</p>
+        <p class="special-price">GHS 95</p>
+        <button class="order-now" onclick="addToOrder('Fried Rice', 45)">
+  Order Now
+</button>
+
+      </div>
+    </div>
+
+     <div class="special-card">
+      <div class="badge">Special</div>
+      <img src="Quick & Easy English Muffin Pizzas.jfif" alt="Mini pizza">
+      <div class="special-info">
+        <h3>Mini Pizza</h3>
+        <p>Special all season pizza</p>
+        <p class="special-price">GHS 95</p>
+        <button class="order-now" onclick="addToOrder('Fried Rice', 45)">
+  Order Now
+</button>
+
+      </div>
+    </div>
+    <div class="special-card">
+      <div class="badge">Special</div>
+      <img src="Southwest Grilled Chicken Wraps_ A Delicious….jfif" alt="Assorted jollof rice">
+      <div class="special-info">
+        <h3>Assorted Fried rice</h3>
+        <p>Assorted rice platter with chicken chunks,beef and some veggies with coleslaw and chicken.</p>
+        <p class="special-price">GHS 80</p>
+        
+      </div>
+    </div>
+  </div>
+</section>
+<section id="desserts">
+    <h2 class="section-title">Desserts</h2>
+
+    <div class="dessert-container">
+
+        <!-- Dessert Item 1 -->
+        <div class="dessert-card">
+            <img src="Best Chocolate Cake Recipe _ My Baking Addiction.jfif" alt="Chocolate Cake">
+            <h3>Chocolate Lava Cake</h3>
+            <p>Warm chocolate center served with vanilla ice cream.</p>
+            <button class="order-btn">Order Now</button>
+        </div>
+
+        <!-- Dessert Item 2 -->
+        <div class="dessert-card">
+            <img src="No-Churn Mango Coconut Ice Cream – Tropical Flavor….jfif" alt="Cheesecake">
+            <h3>Strawberry Cheesecake</h3>
+            <p>Creamy cheesecake topped with fresh strawberries.</p>
+            <button class="order-btn">Order Now</button>
+        </div>
+
+        <!-- Dessert Item 3 -->
+        <div class="dessert-card">
+            <img src="Coffee Chocolate Chip Ice Cream [25 Minutes] –….jfif" alt="Waffles">
+            <h3>Caramel Waffles</h3>
+            <p>Golden waffles drizzled with caramel and nuts.</p>
+            <button class="order-btn">Order Now</button>
+        </div>
+
+        <!-- Dessert Item 4 -->
+        <div class="dessert-card">
+            <img src="Oreo Ice Cream Recipe - Instacart.jfif" alt="Cupcake">
+            <h3>Vanilla Cream Cupcake</h3>
+            <p>Soft vanilla cupcake with whipped cream frosting.</p>
+            <button class="order-btn">Order Now</button>
+        </div>
+
+        <!-- Dessert Item 5 -->
+        <div class="dessert-card">
+            <img src="Vanilla ice cream might be classic, but that….jfif" alt="Brownie">
+            <h3>Fudge Brownie</h3>
+            <p>Rich chocolate brownie topped with almond flakes.</p>
+            <button class="order-btn">Order Now</button>
+        </div>
+
+    </div>
+
+    <!-- ⭐ Special Dessert of the Day ⭐ -->
+    <div class="special-dessert">
+        <h2>⭐ Dessert of the Day ⭐</h2>
+        <img src="Tiramisu Rezept_ Entdecke das perfekte Dessert!.jfif" alt="Tiramisu">
+        <h3>Classic Italian Tiramisu</h3>
+        <p>Limited edition — made fresh this morning with mascarpone cream, espresso, and cocoa.</p>
+        <button class="order-btn special">Try It Today</button>
+    </div>
+</section>
+
+<section id="about" class="about-section">
+  <div class="about-container">
+    
+    <div class="about-image">
+      <img src="ChatGPT Image Nov 29, 2025, 10_28_12 PM.png" alt="Cessy Cooks Chef">
+    </div>
+
+    <div class="about-text">
+      <h2>About Cessy Cooks</h2>
+      <p>
+        At Cessy Cooks, we bring warmth, flavor, and creativity to every plate. 
+        Our passion is to serve meals that not only satisfy your hunger but create 
+        unforgettable experiences — one bite at a time.
+      </p>
+
+      <p>
+        Whether it’s a comforting local dish or a special chef-crafted meal, 
+        we use only the freshest ingredients and authentic recipes to bring you 
+        the true taste of home cooking with a touch of innovation.
+      </p>
+
+      <a href="#menu" class="about-btn">Explore Our Menu</a>
+    </div>
+
+  </div>
+</section>
+
+<section id="contact" class="contact-section">
+  <h2>Contact Us</h2>
+  <p class="contact-subtitle">
+    We'd love to hear from you! Reach out for your orders.
+  </p>
+
+  <div class="contact-container">
+
+    <!-- Contact Info -->
+    <div class="contact-info">
+      <h3>Get in Touch</h3>
+      <p><strong>Phone:</strong> +233 59 345 1814</p>
+      <p><strong>Email:</strong> princessatorque@gmail.com</p>
+      <p><strong>Location:</strong> Accra, Ghana</p>
+    </div>
+
+    <!-- Contact Form -->
+    <form class="contact-form">
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="Your Email" required>
+      <textarea placeholder="Your Message" rows="5" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+
+  </div>
+</section>
+<!-- Floating Order Badge -->
+<div class="order-badge" id="orderBadge">
+  🛍 <span id="orderCount">0</span> Items — GH₵<span id="orderTotal">0</span>
+</div>
+
+<!-- Order Summary Popup -->
+<div class="order-popup" id="orderPopup">
+  <h3>Your Order</h3>
+  <ul id="orderList"></ul>
+
+  <div class="order-total">
+    Total: GH₵<span id="popupTotal">0</span>
+  </div>
+
+  <button class="close-popup" onclick="toggleOrderPopup()">Close</button>
+</div>
+
+</body>
+</html>
