@@ -1,338 +1,403 @@
-// ===== FLUTTERWAVE CONFIGURATION =====
-const FLUTTERWAVE_PUBLIC_KEY = 'FLWPUBK_TEST-your-public-key-here'; // Replace with your actual key
+// IMPORTANT: Replace with your actual Paystack Public Key from https://paystack.com
+const PAYSTACK_PUBLIC_KEY = 'pk_live_YOUR_ACTUAL_PUBLIC_KEY_HERE';
+// Get your key from: https://paystack.com → Settings → API Keys
 
-// Format mobile money number
-const momoNumberInput = document.getElementById('momoNumber');
-momoNumberInput.addEventListener('input', (e) => {
-    let value = e.target.value.replace(/\s/g, '');
-    value = value.replace(/\D/g, '');
-    
-    if (value.length > 3 && value.length <= 6) {
-        value = value.slice(0, 3) + ' ' + value.slice(3);
-    } else if (value.length > 6) {
-        value = value.slice(0, 3) + ' ' + value.slice(3, 6) + ' ' + value.slice(6, 10);
-    }
-    
-    e.target.value = value;
-});
+let cart = [];
+let selectedPayment = null;
 
-// Ghanaian mobile number prefixes
-const ghanaNetworkPrefixes = {
-    mtn: ['024', '054', '055', '059'],
-    vodafone: ['020', '050'],
-    airteltigo: ['027', '057', '026', '056'],
-    telecel: ['023', '028']
-};
-
-// Auto-detect network
-momoNumberInput.addEventListener('blur', (e) => {
-    const number = e.target.value.replace(/\s/g, '');
-    const prefix = number.slice(0, 3);
-    const providerSelect = document.getElementById('momoProvider');
-    
-    for (const [network, prefixes] of Object.entries(ghanaNetworkPrefixes)) {
-        if (prefixes.includes(prefix)) {
-            providerSelect.value = network;
-            break;
-        }
-    }
-});
-
-// Validate Ghanaian number
-function isValidGhanaNumber(number) {
-    const cleanNumber = number.replace(/\s/g, '');
-    if (cleanNumber.length !== 10 || !cleanNumber.startsWith('0')) {
-        return false;
-    }
-    const prefix = cleanNumber.slice(0, 3);
-    const allPrefixes = Object.values(ghanaNetworkPrefixes).flat();
-    return allPrefixes.includes(prefix);
+// Add item to cart
+function orderItem(itemName, price) {
+    const item = { name: itemName, price, quantity: 1 };
+    const existing = cart.find(i => i.name === itemName);
+    if (existing) existing.quantity += 1;
+    else cart.push(item);
+    showOrderConfirmation(itemName, price);
+    updateCartCount();
 }
 
-// Show notification
-function showNotification(type, title, message) {
-    const notification = document.createElement('div');
-    notification.style.cssText = `
-        position: fixed;
-        top: 100px;
-        right: 20px;
-        background: ${type === 'success' ? '#4caf50' : type === 'error' ? '#f44336' : '#ff9800'};
-        color: white;
-        padding: 1.5rem 2rem;
-        border-radius: 12px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        z-index: 10000;
-        min-width: 320px;
-        animation: slideInRight 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    `;
-    
-    notification.innerHTML = `
-        <div style="display: flex; align-items: center; gap: 1rem;">
-            <span style="font-size: 2rem;">${type === 'success' ? '✓' : type === 'error' ? '✕' : '⚠'}</span>
+function showOrderConfirmation(itemName, price) {
+    const popup = document.createElement('div');
+    popup.className = 'order-popup';
+    popup.innerHTML = `
+        <div class="popup-content">
+            <span class="popup-icon">✓</span>
             <div>
-                <h4 style="margin: 0 0 0.3rem 0; font-size: 1.1rem; font-weight: 600;">${title}</h4>
-                <p style="margin: 0; font-size: 0.9rem; opacity: 0.95;">${message}</p>
+                <h3>Added to Order!</h3>
+                <p>${itemName} - &#8373;${price}</p>
             </div>
         </div>
     `;
-    
-    document.body.appendChild(notification);
-    
+    document.body.appendChild(popup);
+    requestAnimationFrame(() => popup.classList.add('show'));
     setTimeout(() => {
-        notification.style.animation = 'slideOutRight 0.4s ease';
-        setTimeout(() => notification.remove(), 400);
-    }, 5000);
+        popup.classList.remove('show');
+        setTimeout(() => popup.remove(), 300);
+    }, 3000);
 }
 
-// Add animations
-const animationStyle = document.createElement('style');
-animationStyle.textContent = `
-    @keyframes slideInRight {
-        from {
-            transform: translateX(400px);
-            opacity: 0;
-        }
-        to {
-            transform: translateX(0);
-            opacity: 1;
-        }
-    }
-    @keyframes slideOutRight {
-        from {
-            transform: translateX(0);
-            opacity: 1;
-        }
-        to {
-            transform: translateX(400px);
-            opacity: 0;
-        }
-    }
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-`;
-document.head.appendChild(animationStyle);
+function updateCartCount() {
+    const totalItems = cart.reduce((s, i) => s + i.quantity, 0);
+    const reviewBtn = document.querySelector('.cta');
+    if (reviewBtn) reviewBtn.textContent = totalItems > 0 ? `Review Order (${totalItems})` : 'Review Order';
+}
 
-// Show loading overlay
-function showLoadingOverlay(message) {
-    const overlay = document.createElement('div');
-    overlay.id = 'paymentLoadingOverlay';
-    overlay.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.92);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 9999;
-        backdrop-filter: blur(8px);
-    `;
-    
-    overlay.innerHTML = `
-        <div style="
-            background: white;
-            padding: 3rem;
-            border-radius: 20px;
-            text-align: center;
-            max-width: 400px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-        ">
-            <div style="
-                border: 4px solid #f3f3f3;
-                border-top: 4px solid #d4af37;
-                border-radius: 50%;
-                width: 60px;
-                height: 60px;
-                animation: spin 1s linear infinite;
-                margin: 0 auto 1.5rem auto;
-            "></div>
-            <h3 style="margin-bottom: 1rem; color: #1a1a1a; font-size: 1.3rem;">${message}</h3>
-            <p style="color: #666; font-size: 0.95rem;">Please do not close this window</p>
+function showCart() {
+    if (cart.length === 0) {
+        alert('Your cart is empty. Please add items to your order.');
+        return;
+    }
+    const total = cart.reduce((s, i) => s + i.price * i.quantity, 0);
+    showCartModal(total);
+}
+
+function showCartModal(total) {
+    document.querySelectorAll('.cart-modal').forEach(m => m.remove());
+    let cartItemsHTML = '';
+    cart.forEach((item, idx) => {
+        const itemTotal = item.price * item.quantity;
+        cartItemsHTML += `
+            <div class="cart-item">
+                <div class="cart-item-details">
+                    <span class="cart-item-name">${item.name}</span>
+                    <span class="cart-item-quantity">x${item.quantity}</span>
+                </div>
+                <div class="cart-item-actions">
+                    <span class="cart-item-price">&#8373;${itemTotal}</span>
+                    <button class="remove-item" onclick="removeFromCart(${idx})">×</button>
+                </div>
+            </div>
+        `;
+    });
+
+    const modal = document.createElement('div');
+    modal.className = 'cart-modal';
+    modal.innerHTML = `
+        <div class="cart-modal-content">
+            <div class="cart-modal-header">
+                <h2>Your Order</h2>
+                <button class="close-modal" onclick="closeCartModal()">×</button>
+            </div>
+            <div class="cart-items-container">${cartItemsHTML}</div>
+            <div class="cart-total"><span>Total:</span><span class="total-amount">&#8373;${total}</span></div>
+            <div class="delivery-info">
+                <h3>Delivery Information</h3>
+                <input type="text" id="customer-name" placeholder="Your Name" required>
+                <input type="email" id="customer-email" placeholder="Your Email" required>
+                <input type="tel" id="customer-phone" placeholder="Phone Number" required>
+                <textarea id="delivery-address" placeholder="Delivery Address" required></textarea>
+            </div>
+            <div class="payment-methods">
+                <h3>Payment Method</h3>
+                <div class="payment-options">
+                    <button class="payment-btn" onclick="selectPayment('momo', this)">
+                        <span class="payment-icon">📱</span><span>Mobile Money</span>
+                    </button>
+                    <button class="payment-btn" onclick="selectPayment('cash', this)">
+                        <span class="payment-icon">💵</span><span>Cash on Delivery</span>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-secondary" onclick="closeCartModal()">Continue Shopping</button>
+                <button class="btn-primary" onclick="proceedToCheckout()">Proceed to Checkout</button>
+            </div>
         </div>
     `;
-    
-    document.body.appendChild(overlay);
+    document.body.appendChild(modal);
+    requestAnimationFrame(() => modal.classList.add('show'));
 }
 
-function hideLoadingOverlay() {
-    const overlay = document.getElementById('paymentLoadingOverlay');
-    if (overlay) {
-        overlay.remove();
-    }
+function removeFromCart(index) {
+    cart.splice(index, 1);
+    updateCartCount();
+    if (cart.length === 0) closeCartModal();
+    else showCartModal(cart.reduce((s, i) => s + i.price * i.quantity, 0));
 }
 
-// Calculate total amount from cart
-function calculateTotal() {
-    return cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-}
-
-// Process payment with Flutterwave
-async function processMomoPayment() {
-    const momoProvider = document.getElementById('momoProvider').value;
-    const momoNumber = document.getElementById('momoNumber').value.replace(/\s/g, '');
-    const momoName = document.getElementById('momoName').value;
-    const customerName = document.getElementById('customerName').value;
-    const customerPhone = document.getElementById('customerPhone').value;
-    const customerEmail = customerPhone + '@bellacucina.com'; // Generate email from phone
-    const customerAddress = document.getElementById('customerAddress').value;
-    
-    // Validate payment details
-    if (!momoProvider) {
-        showNotification('error', 'Validation Error', 'Please select your Mobile Money network');
-        return false;
-    }
-    
-    if (!isValidGhanaNumber(momoNumber)) {
-        showNotification('error', 'Invalid Number', 'Please enter a valid 10-digit Ghanaian mobile number');
-        return false;
-    }
-    
-    if (!momoName.trim()) {
-        showNotification('error', 'Missing Information', 'Please enter the registered account name');
-        return false;
-    }
-    
-    // Get total amount
-    const totalAmount = calculateTotal();
-    
-    // Generate unique transaction reference
-    const txRef = 'BC-' + Date.now() + '-' + Math.floor(Math.random() * 1000000);
-    
-    // Show loading
-    showLoadingOverlay('Processing your payment...');
-    
-    try {
-        // Flutterwave Payment Configuration
-        const paymentData = {
-            public_key: FLUTTERWAVE_PUBLIC_KEY,
-            tx_ref: txRef,
-            amount: totalAmount,
-            currency: 'GHS',
-            payment_options: 'mobilemoneyghana',
-            meta: {
-                consumer_id: momoNumber,
-                consumer_mac: momoName,
-            },
-            customer: {
-                email: customerEmail,
-                phone_number: momoNumber,
-                name: customerName,
-            },
-            customizations: {
-                title: 'Bella Cucina',
-                description: 'Food Order Payment',
-                logo: 'https://your-logo-url.com/logo.png', // Optional: Add your logo URL
-            },
-            callback: function(payment) {
-                hideLoadingOverlay();
-                
-                if (payment.status === 'successful') {
-                    // Verify payment on your backend (recommended)
-                    verifyPaymentOnBackend(payment.transaction_id, txRef);
-                } else {
-                    showNotification('error', 'Payment Cancelled', 'Your payment was not completed');
-                }
-            },
-            onclose: function() {
-                hideLoadingOverlay();
-                showNotification('warning', 'Payment Window Closed', 'You closed the payment window');
-            }
-        };
-        
-        // Initialize Flutterwave payment
-        FlutterwaveCheckout(paymentData);
-        
-    } catch (error) {
-        hideLoadingOverlay();
-        showNotification('error', 'Payment Error', 'An error occurred. Please try again.');
-        console.error('Payment error:', error);
-        return false;
+function closeCartModal() {
+    const modal = document.querySelector('.cart-modal');
+    if (modal) {
+        modal.classList.remove('show');
+        setTimeout(() => modal.remove(), 300);
     }
 }
 
-// Verify payment on backend (IMPORTANT: Do this on your server)
-async function verifyPaymentOnBackend(transactionId, txRef) {
-    showLoadingOverlay('Verifying payment...');
+function selectPayment(method, btn) {
+    selectedPayment = method;
+    document.querySelectorAll('.payment-btn').forEach(b => b.classList.remove('active'));
+    if (btn && btn.classList) btn.classList.add('active');
+}
+
+function proceedToCheckout() {
+    const name = document.getElementById('customer-name')?.value.trim() || '';
+    const email = document.getElementById('customer-email')?.value.trim() || '';
+    const phone = document.getElementById('customer-phone')?.value.trim() || '';
+    const address = document.getElementById('delivery-address')?.value.trim() || '';
     
-    try {
-        // In production, call your backend API to verify the payment
-        // Example:
-        // const response = await fetch('/api/verify-payment', {
-        //     method: 'POST',
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify({ transactionId, txRef })
-        // });
-        // const result = await response.json();
-        
-        // SIMULATION: Remove this in production
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        const result = { success: true, data: { status: 'successful', transaction_id: transactionId } };
-        
-        hideLoadingOverlay();
-        
-        if (result.success && result.data.status === 'successful') {
-            // Payment successful
-            showNotification('success', 'Payment Successful!', `Transaction ID: ${transactionId}`);
-            
-            // Store transaction
-            const paymentDetails = {
-                transactionId: transactionId,
-                txRef: txRef,
-                amount: calculateTotal(),
-                timestamp: new Date().toISOString(),
-                status: 'completed',
-                items: cart
-            };
-            
-            const transactions = JSON.parse(localStorage.getItem('transactions') || '[]');
-            transactions.push(paymentDetails);
-            localStorage.setItem('transactions', JSON.stringify(transactions));
-            
-            // Close checkout modal
-            document.getElementById('checkoutModal').classList.remove('active');
-            
-            // Show success modal
-            const orderNumber = 'ORD' + Date.now();
-            document.getElementById('orderNumber').textContent = orderNumber;
-            document.getElementById('successModal').classList.add('active');
-            
-            // Clear cart
-            cart = [];
-            updateCartDisplay();
-            updateCartCount();
-            
-            return true;
-        } else {
-            showNotification('error', 'Payment Failed', 'Payment verification failed. Please contact support.');
-            return false;
-        }
-        
-    } catch (error) {
-        hideLoadingOverlay();
-        showNotification('error', 'Verification Error', 'Could not verify payment. Please contact support.');
-        console.error('Verification error:', error);
-        return false;
+    if (!name || !email || !phone || !address) {
+        return alert('Please fill in all delivery information.');
+    }
+    
+    // Validate email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        return alert('Please enter a valid email address.');
+    }
+    
+    // Validate phone
+    if (phone.length !== 10 || !/^\d+$/.test(phone)) {
+        return alert('Please enter a valid 10-digit phone number.');
+    }
+    
+    if (!selectedPayment) {
+        return alert('Please select a payment method.');
+    }
+    
+    processPayment(name, email, phone, address);
+}
+
+function processPayment(name, phone, address) {
+    const total = cart.reduce((s, i) => s + i.price * i.quantity, 0);
+    const email = document.getElementById('customer-email')?.value || prompt('Please enter your email for Paystack:');
+    
+    closeCartModal();
+    
+    if (selectedPayment === 'momo') {
+        showMomoPayment(total, name, phone, address);
+    } else if (selectedPayment === 'paystack') {
+        showProcessingModal();
+        setTimeout(() => {
+            closeProcessingModal();
+            processPaystackPayment(name, email, phone, address, total);
+        }, 500);
+    } else if (selectedPayment === 'cash') {
+        confirmCashOrder(total, name, phone, address);
     }
 }
 
-// Update checkout form submission
-document.getElementById('checkoutForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
+function showMomoPayment(total, name, email, phone, address) {
+    const modal = document.createElement('div');
+    modal.className = 'cart-modal show';
+    modal.innerHTML = `
+        <div class="cart-modal-content">
+            <div class="cart-modal-header">
+                <h2>Mobile Money Payment</h2>
+                <button class="close-modal" onclick="closeCartModal()">×</button>
+            </div>
+            <div class="payment-form">
+                <p class="payment-instruction">Select your mobile money provider and enter your number</p>
+                <div class="payment-amount-display"><span>Amount to Pay:</span><span class="amount">&#8373;${total}</span></div>
+                <select id="momo-provider" class="payment-input">
+                    <option value="">Select Provider</option>
+                    <option value="mtn">MTN Mobile Money</option>
+                    <option value="vod">Vodafone Cash</option>
+                    <option value="tgo">AirtelTigo Money</option>
+                </select>
+                <input type="tel" id="momo-number" class="payment-input" placeholder="Mobile Money Number (10 digits)" value="${phone}" maxlength="10">
+                <p class="payment-note">💡 You will receive a prompt on your phone to authorize the payment</p>
+                <button class="btn-primary" onclick="processPaystackMobileMoney('${name}', '${email}', '${phone}', '${address}', ${total})">Pay &#8373;${total}</button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+}
+
+function processPaystackMobileMoney(name, email, phone, address, total) {
+    const provider = document.getElementById('momo-provider')?.value;
+    const momoNumber = document.getElementById('momo-number')?.value;
     
-    // Validate delivery information
-    const customerName = document.getElementById('customerName').value;
-    const customerPhone = document.getElementById('customerPhone').value;
-    const customerAddress = document.getElementById('customerAddress').value;
+    if (!provider) {
+        return alert('Please select your mobile money provider.');
+    }
     
-    if (!customerName || !customerPhone || !customerAddress) {
-        showNotification('error', 'Missing Information', 'Please fill in all delivery information');
+    if (!momoNumber || momoNumber.length !== 10) {
+        return alert('Please enter a valid 10-digit mobile money number.');
+    }
+    
+    closeCartModal();
+    
+    // Check if Paystack is loaded
+    if (typeof PaystackPop === 'undefined') {
+        alert('Payment system is loading. Please try again in a moment.');
         return;
     }
     
-    // Process payment
-    await processMomoPayment();
+    // Convert total to pesewas (Paystack uses smallest currency unit)
+    const amountInPesewas = Math.round(total * 100);
+    
+    // Generate unique reference
+    const reference = 'ORDER_' + Math.floor((Math.random() * 1000000000) + 1) + '_' + Date.now();
+    
+    // Initialize Paystack payment
+    const handler = PaystackPop.setup({
+        key: PAYSTACK_PUBLIC_KEY,
+        email: email,
+        amount: amountInPesewas,
+        currency: 'GHS',
+        ref: reference,
+        metadata: {
+            custom_fields: [
+                {
+                    display_name: "Customer Name",
+                    variable_name: "customer_name",
+                    value: name
+                },
+                {
+                    display_name: "Phone Number",
+                    variable_name: "phone_number",
+                    value: phone
+                },
+                {
+                    display_name: "Delivery Address",
+                    variable_name: "delivery_address",
+                    value: address
+                },
+                {
+                    display_name: "Order Items",
+                    variable_name: "order_items",
+                    value: JSON.stringify(cart)
+                }
+            ]
+        },
+        channels: ['mobile_money'],
+        mobile_money: {
+            phone: momoNumber,
+            provider: provider
+        },
+        onClose: function() {
+            alert('Payment window closed. Your order has not been placed.');
+        },
+        callback: function(response) {
+            // Payment successful
+            if (response.status === 'success') {
+                showSuccessModal(name, phone, address, total, 'Mobile Money', response.reference);
+            } else {
+                alert('Payment was not completed. Please try again.');
+            }
+        }
+    });
+    
+    handler.openIframe();
+}
+
+function confirmCashOrder(total, name, phone, address) {
+    showProcessingModal();
+    setTimeout(() => {
+        closeProcessingModal();
+        showSuccessModal(name, phone, address, total, 'Cash on Delivery', null);
+    }, 1000);
+}
+
+function showProcessingModal() {
+    const modal = document.createElement('div');
+    modal.className = 'cart-modal show processing-modal';
+    modal.innerHTML = `
+        <div class="cart-modal-content processing-content">
+            <div class="spinner"></div>
+            <h3>Processing your order...</h3>
+            <p>Please wait</p>
+        </div>
+    `;
+    document.body.appendChild(modal);
+}
+
+function closeProcessingModal() {
+    document.querySelectorAll('.processing-modal').forEach(m => m.remove());
+}
+
+function showSuccessModal(name, phone, address, total, paymentMethod, reference) {
+    cart = [];
+    updateCartCount();
+    selectedPayment = null;
+    
+    let referenceHTML = '';
+    if (reference) {
+        referenceHTML = `<p><strong>Payment Reference:</strong> ${reference}</p>`;
+    }
+    
+    const modal = document.createElement('div');
+    modal.className = 'cart-modal show';
+    modal.innerHTML = `
+        <div class="cart-modal-content success-content">
+            <div class="success-icon">✓</div>
+            <h2>Order Confirmed!</h2>
+            <p class="success-message">Thank you for your order, ${name}!</p>
+            <div class="order-summary">
+                <h3>Order Summary</h3>
+                <p><strong>Total:</strong> &#8373;${total}</p>
+                <p><strong>Payment Method:</strong> ${paymentMethod}</p>
+                ${referenceHTML}
+                <p><strong>Delivery Address:</strong> ${address}</p>
+                <p><strong>Contact:</strong> ${phone}</p>
+            </div>
+            <p class="delivery-estimate">Estimated delivery: 30-45 minutes</p>
+            <button class="btn-primary" onclick="closeCartModal()">Continue Shopping</button>
+        </div>
+    `;
+    document.body.appendChild(modal);
+}
+
+function scrollToSection(sectionName) {
+    let target = null;
+    if (sectionName === 'home') target = document.querySelector('.home');
+    else if (sectionName === 'menu') target = document.querySelector('#main-meal') || document.querySelector('.container');
+    else {
+        document.querySelectorAll('.section').forEach(sec => {
+            const title = sec.querySelector('.section-title');
+            if (title && title.textContent.toLowerCase().includes(sectionName.toLowerCase())) target = sec;
+        });
+    }
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// Inject popup style once
+(function injectPopupStyle(){
+    if (document.getElementById('order-popup-style')) return;
+    const style = document.createElement('style');
+    style.id = 'order-popup-style';
+    style.textContent = `
+        .order-popup{position:fixed;top:100px;right:20px;background:#fff;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.2);padding:20px 30px;z-index:10000;opacity:0;transform:translateX(400px);transition:all .3s ease}
+        .order-popup.show{opacity:1;transform:translateX(0)}
+        .popup-content{display:flex;align-items:center;gap:15px}
+        .popup-icon{width:40px;height:40px;background:linear-gradient(135deg,#b8956a 0%,#d4af7a 100%);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700}
+        .popup-content h3{margin:0;color:#2c2c2c;font-size:1.2em}
+        .popup-content p{margin:5px 0 0 0;color:#666;font-size:0.95em}
+    `;
+    document.head.appendChild(style);
+})();
+
+// DOM ready init
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.order-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const card = this.closest('.menu-card');
+            if (!card) return;
+            const itemName = card.querySelector('.card-name')?.textContent || 'Item';
+            const priceText = card.querySelector('.card-price')?.textContent || '0';
+            const numeric = priceText.replace(/[^0-9.,]/g, '').replace(',', '.');
+            const price = parseFloat(numeric) || 0;
+            orderItem(itemName, price);
+        });
+    });
+
+    const reviewBtn = document.querySelector('.cta');
+    if (reviewBtn) reviewBtn.addEventListener('click', function(e){ e.preventDefault(); showCart(); });
+
+    document.querySelectorAll('.nav-links a:not(.cta)').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const t = this.textContent.toLowerCase().trim();
+            if (t === 'home') scrollToSection('home');
+            else if (t === 'main meal' || t === 'main' || t === 'menu') scrollToSection('menu');
+            else if (t === 'specials') scrollToSection('specials');
+            else if (t === 'desserts') scrollToSection('desserts');
+            else if (t === 'drinks' || t === 'beverages') scrollToSection('beverages');
+            const menuToggle = document.getElementById('menu-toggle');
+            if (menuToggle) menuToggle.checked = false;
+        });
+    });
+
+    const exploreBtn = document.querySelector('.home-btn');
+    if (exploreBtn) exploreBtn.addEventListener('click', function(e){ e.preventDefault(); scrollToSection('menu'); });
 });
