@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cessy Cooks</title>
+<link rel="stylesheet" href="style.css">
+<script src="script.js"></script>
+<script src="https://js.paystack.co/v1/inline.js"></script>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo">Cessy<span>Cooks</span></div>
+
+    <input type="checkbox" id="menu-toggle">
+    <label for="menu-toggle" class="hamburger">&#9776;</label>
+
+    <ul class="nav-links">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Main Meal</a></li>
+        <li><a href="#">Specials</a></li>
+        <li><a href="#">Desserts</a></li>
+        <li><a href="#">Drinks</a></li>
+        <li><a href="#" class="cta">Review Order</a></li>
+    </ul>
+</nav>
+<style></style>
+<section class="home">
+    <video autoplay muted loop playsinline class="bg-video">
+        <source src="images/Black Green Modern Food Channel Video (2).mp4" type="video/mp4">
+    
+    </video>
+
+    <div class="home-content">
+
+        <a href="#" class="home-btn">Explore Our Menu</a>
+    </div>
+</section>
+ <div class="header">
+        <h1 class="logo">Cessy<span>Cooks</span></h1>
+        <p class="tagline">Contemporary Fine Dining</p>
+    </div>
+
+    <div class="container">
+     
+        <div class="section">
+            <div class="section-header">
+                
+                <h2 class="section-title">Main Meal</h2>
+            </div>
+            <div class="menu-scroll">
+                <div class="menu-card">
+                    <div class="card-image-container">
+                        <img src="images/Quick Beef Chow Mein Recipe.jfif" alt="Chow Mein" class="card-image">
+                    </div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <h3 class="card-name">Stir fried noodles </h3>
+                            <span class="card-price">&#8373;30</span>
+                        </div>
+                        <div class="separator"></div>
+                        <p class="card-description">Stir fried noodles with vegetables and assorted protein</p>
+                        <button class="order-btn">Order Now</button>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <div class="card-image-container">
+                        <img src="images/spaghetti stir fry.jfif" alt="Savory Stir-Fry" class="card-image">
+                    </div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <h3 class="card-name">Spaghetti stir fry</h3>
+                            <span class="card-price">&#8373;30</span>
+                        </div>
+                        <div class="separator"></div>
+                        <p class="card-description">Savory stir-fry with a mix of vegetables and protein</p>
+                        <button class="order-btn">Order Now</button>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <div class="card-image-container">
+                        <img src="images/Easy Beef Fried Rice Recipe for Quick Dinner –….jfif" alt="Beef Fried Rice" class="card-image">
+                    </div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <h3 class="card-name">Beef Fried Rice</h3>
+                            <span class="card-price">&#8373;30</span>
+                        </div>
+                        <div class="separator"></div>
+                        <p class="card-description">Stir-fried rice with tender beef strips, vegetables, and soy sauce</p>
+                        <button class="order-btn">Order Now</button>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <div class="card-image-container">
+                        <img src="images/Baked Jollof Rice - KikiFoodies.jfif" alt="Jollof Rice" class="card-image">
+                    </div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <h3 class="card-name">Jollof rice with grilled chicken</h3>
+                            <span class="card-price">&#8373;30</span>
+                        </div>
+                        <div class="separator"></div>
+                        <p class="card-description">Jollof rice with a rich tomato base, peppers, onions, and a blend of West African spices with grilled chicken</p>
+                        <button class="order-btn">Order Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title">Specials</h2>
+            </div>
+            <div class="menu-scroll">
+                <div class="menu-card">
+                    <div class="card-image-container">
+                        <img src="images/Yogurt Blue Coral Café.jfif" alt="Yoghurt Parfait" class="card-image">
+                    </div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <h3 class="card-name">Yoghurt Parfait</h3>
+                            <span class="card-price">&#8373;50</span>
+                        </div>
+                        <div class="separator"></div>
+                        <p class="card-description">Yoghurt parfait with layers of creamy yoghurt, fresh fruits, and granola</p>
+                        <button class="order-btn">Order Now</button>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <div class="card-image-container">
+                        <img src="images/how to make nigerian salad.jfif" alt="Ghanaian Salad" class="card-image">
+                    </div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <h3 class="card-name">Ghanaian Salad</h3>
+                            <span class="card-price">&#8373;45</span>
+                        </div>
+                        <div class="separator"></div>
+                        <p class="card-description">salad with mixed greens, vegetables, and a tangy dressing with protein</p>
+                        <button class="order-btn">Order Now</button>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <div class="card-image-container">
+                        <img src="images/Quick & Easy English Muffin Pizzas.jfif" alt="English Muffin Pizzas" class="card-image">
+                    </div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <h3 class="card-name">English Muffin Pizzas</h3>
+                            <span class="card-price">&#8373;90</span>
+                        </div>
+                        <div class="separator"></div>
+                        <p class="card-description">mini English muffin pizzas with tomato sauce, cheese, and various toppings</p>
+                        <button class="order-btn">Order Now</button>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <div class="card-image-container">
+                        <img src="images/Southwest Grilled Chicken Wraps_ A Delicious….jfif" alt="Lobster Pasta" class="card-image">
+                    </div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <h3 class="card-name">Grilled Chicken Wraps</h3>
+                            <span class="card-price">&#8373;50</span>
+                        </div>
+                        <div class="separator"></div>
+                        <p class="card-description">chicken wrap with  lettuce, tomato, and a creamy dressing</p>
+                        <button class="order-btn">Order Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Desserts Section -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🍰</span>
+                <h2 class="section-title">Desserts</h2>
+            </div>
+            <div class="menu-scroll">
+                <div class="menu-card">
+                    <div class="card-image-container">
+                        <img src="images/Vanilla ice cream might be classic, but that….jfif" alt="Vanilla Ice Cream" class="card-image">
+                    </div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <h3 class="card-name">Vanilla Ice Cream</h3>
+                            <span class="card-price">&#8373;20</span>
+                        </div>
+                        <div class="separator"></div>
+                        <p class="card-description">A scoop of classic vanilla ice cream </p>
+                        <button class="order-btn">Order Now</button>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <div class="card-image-container">
+                        <img src="images/Oreo Ice Cream Recipe - Instacart.jfif" alt="Oreo Ice Cream" class="card-image">
+                    </div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <h3 class="card-name">Oreo Ice Cream</h3>
+                            <span class="card-price">&#8373;30</span>
+                        </div>
+                        <div class="separator"></div>
+                        <p class="card-description">A scoop of creamy vanilla ice cream with crushed Oreo cookies mixed in</p>
+                        <button class="order-btn">Order Now</button>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <div class="card-image-container">
+                        <img src="images/Coffee Chocolate Chip Ice Cream [25 Minutes] –….jfif" alt="Coffee Chocolate Chip Ice Cream" class="card-image">
+                    </div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <h3 class="card-name"> Chocolate Chip Ice Cream</h3>
+                            <span class="card-price">&#8373;20</span>
+                        </div>
+                        <div class="separator"></div>
+                        <p class="card-description">A scoop of chocolate chip ice cream</p>
+                        <button class="order-btn">Order Now</button>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <div class="card-image-container">
+                        <img src="images/download (2).jfif" alt="Chocolate milkshake" class="card-image">
+                    </div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <h3 class="card-name"></h3>
+                            <span class="card-price">&#8373;50</span>
+                        </div>
+                        <div class="separator"></div>
+                        <p class="card-description">Rich and creamy chocolate milkshake</p>
+                        <button class="order-btn">Order Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Beverages Section -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🍷</span>
+                <h2 class="section-title">Beverages</h2>
+            </div>
+            <div class="menu-scroll">
+                <div class="menu-card">
+                    <div class="card-image-container">
+                        <img src="images/Watermelon Basil Mule Cocktail Recipe _ How to___.jfif" alt="Watermelon juice" class="card-image">
+                    </div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <h3 class="card-name">Watermelon juice</h3>
+                            <span class="card-price">&#8373;30</span>
+                        </div>
+                        <div class="separator"></div>
+                        <p class="card-description">Fresh Watermelon </p>
+                        <button class="order-btn">Order Now</button>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <div class="card-image-container">
+                        <img src="images/Pineapple Juice Powder - Organic.jfif" alt="Pineapple juice" class="card-image">
+                    </div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <h3 class="card-name">Pineapple juice</h3>
+                            <span class="card-price">&#8373;30</span>
+                        </div>
+                        <div class="separator"></div>
+                        <p class="card-description">Fresh organic Pineapple juice</p>
+                        <button class="order-btn">Order Now</button>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <div class="card-image-container">
+                        <img src="images/download (4).jfif" alt="Artisan Coffee" class="card-image">
+                    </div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <h3 class="card-name">Hibiscus Drink</h3>
+                            <span class="card-price">&#8373;30</span>
+                        </div>
+                        <div class="separator"></div>
+                        <p class="card-description">Freshly prepared hibiscus drink with pineapple, cinnamon,ginger and sugar</p>
+                        <button class="order-btn">Order Now</button>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <div class="card-image-container">
+                        <img src="images/download (3).jfif" alt="Fresh Orange Juices" class="card-image">
+                    </div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <h3 class="card-name">Fresh Pressed Orange juice</h3>
+                            <span class="card-price">&#8373;30</span>
+                        </div>
+                        <div class="separator"></div>
+                        <p class="card-description">Daily selection of cold-pressed organic orange juice</p>
+                        <button class="order-btn">Order Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; @Cessy.  All rights reserved.</p>
+   
+    </div>
+</body>
+</html>
+
+<script src="script.js"></script>
+</body>
+</html>
+<style></style>
