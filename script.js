@@ -401,3 +401,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const exploreBtn = document.querySelector('.home-btn');
     if (exploreBtn) exploreBtn.addEventListener('click', function(e){ e.preventDefault(); scrollToSection('menu'); });
 });
+const hamburger = document.querySelector('.hamburger-menu');
+const nav = document.querySelector('nav');
+
+hamburger.addEventListener('click', () => {
+    nav.classList.toggle('active');
+});
+

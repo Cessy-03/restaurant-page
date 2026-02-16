@@ -1465,22 +1465,67 @@ body {
 
 /* Mobile Responsive */
 @media (max-width: 768px) {
+   
+    body {
+        font-size: 16px;
+    }
+
+    header, .main-content, footer {
+        padding: 10px;
+        width: 95%;
+        margin: 0 auto;
+    }
+
+   
+    nav {
+        position: relative;
+    }
+
+    nav ul {
+        display: none; 
+        flex-direction: column;
+        gap: 15px;
+        list-style: none;
+        background-color: #fff; 
+        padding: 10px;
+        border-radius: 8px;
+    }
+
+    nav ul li a {
+        color: #333; 
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+   
+    .hamburger-menu {
+        display: block;
+        cursor: pointer;
+    }
+
+    
+    nav.active ul {
+        display: flex;
+    }
+
+    
     .cart-modal-content {
         width: 95%;
         padding: 20px;
     }
-    
+
     .payment-options {
         grid-template-columns: 1fr;
     }
-    
+
     .modal-actions {
         flex-direction: column;
     }
-    
+
     .order-popup {
         right: 10px;
         left: 10px;
         width: auto;
     }
 }
+
