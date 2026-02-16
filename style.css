@@ -435,13 +435,14 @@ body {
     }
 
     .home {
-        height: 35vh;
-        min-height: 35vh;
-        padding-top: 0;
+        height: 50vh;
+        min-height: 50vh;
+        padding-top: 70px;
+        margin-top: -70px;
     }
 
     .bg-video {
-        height: 35vh;
+        height: 50vh;
     }
 
     .home-content h1 {
@@ -527,13 +528,14 @@ body {
     }
 
     .home {
-        height: 30vh;
-        min-height: 30vh;
-        padding-top: 0;
+        height: 45vh;
+        min-height: 45vh;
+        padding-top: 60px;
+        margin-top: -60px;
     }
 
     .bg-video {
-        height: 30vh;
+        height: 45vh;
     }
 
     .home-content h1 {
