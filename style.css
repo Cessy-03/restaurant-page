@@ -104,12 +104,16 @@ body {
         right: -100%;
         height: 100vh;
         width: 220px;
-        background: #6c0c0c;
+        background: rgba(255, 255, 255, 0.95);
         flex-direction: column;
         padding-top: 100px;
         gap: 30px;
         transition: 0.4s;
         box-shadow: -2px 0 10px rgba(0,0,0,0.2);
+    }
+
+    .nav-links a {
+        color: #222;
     }
 
     #menu-toggle:checked ~ .nav-links {
