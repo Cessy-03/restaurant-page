@@ -8,7 +8,7 @@ body {
     position: fixed;
     top: 0;
     width: 100%;
-    padding: 20px 80px;   /* restored original padding */
+    padding: 20px 40px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -17,6 +17,18 @@ body {
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
     z-index: 100;
     box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+    .navbar {
+        padding: 15px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        padding: 12px 15px;
+    }
 }
 
 .logo {
@@ -253,8 +265,8 @@ body {
 }
 
 .menu-card {
-    min-width: 600px;
-    max-width: 600px;
+    min-width: 500px;
+    max-width: 500px;
     background: white;
     border-radius: 12px;
     overflow: hidden;
@@ -393,14 +405,14 @@ body {
     }
 
     .menu-card {
-        min-width: 320px;
-        max-width: 320px;
+        min-width: 280px;
+        max-width: 280px;
         flex-direction: column;
     }
 
     .card-image-container {
         width: 100%;
-        height: 200px;
+        height: 180px;
         min-width: auto;
     }
 
@@ -410,6 +422,173 @@ body {
 
     .card-price {
         font-size: 1.2em;
+    }
+}
+
+@media (max-width: 600px) {
+    .navbar {
+        padding: 15px 20px;
+    }
+
+    .home-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .home-content p {
+        font-size: 1rem;
+    }
+
+    .header {
+        max-width: 90%;
+        margin: 80px auto 20px;
+        padding: 15px 15px;
+    }
+
+    .header .logo {
+        font-size: 1.4rem;
+    }
+
+    .section {
+        padding: 0 10px;
+        margin-bottom: 40px;
+    }
+
+    .section-title {
+        font-size: 1.5em;
+    }
+
+    .section-header {
+        padding-left: 10px;
+    }
+
+    .menu-card {
+        min-width: 90vw;
+        max-width: 90vw;
+        flex-direction: column;
+    }
+
+    .card-image-container {
+        width: 100%;
+        height: 150px;
+    }
+
+    .card-content {
+        padding: 20px;
+    }
+
+    .card-name {
+        font-size: 1.2em;
+    }
+
+    .card-price {
+        font-size: 1em;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        padding: 12px 12px;
+    }
+
+    .logo {
+        font-size: 1.5em;
+    }
+
+    .home-content h1 {
+        font-size: 1.8rem;
+    }
+
+    .home-content p {
+        font-size: 0.9rem;
+    }
+
+    .header {
+        max-width: 95%;
+        margin: 70px auto 15px;
+        padding: 12px 12px;
+    }
+
+    .header .logo {
+        font-size: 1.2rem;
+    }
+
+    .tagline {
+        font-size: 0.85em;
+    }
+
+    .container {
+        padding: 20px 10px;
+    }
+
+    .section {
+        padding: 0 5px;
+        margin-bottom: 30px;
+    }
+
+    .section-title {
+        font-size: 1.2em;
+    }
+
+    .section-header {
+        gap: 10px;
+        margin-bottom: 20px;
+        padding-left: 5px;
+    }
+
+    .section-icon {
+        font-size: 1.8em;
+    }
+
+    .menu-scroll {
+        padding: 15px 5px 20px;
+        gap: 15px;
+    }
+
+    .menu-card {
+        min-width: 95vw;
+        max-width: 95vw;
+        flex-direction: column;
+        border-radius: 8px;
+    }
+
+    .card-image-container {
+        width: 100%;
+        height: 120px;
+    }
+
+    .card-content {
+        padding: 15px;
+    }
+
+    .card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 8px;
+    }
+
+    .card-name {
+        font-size: 1em;
+    }
+
+    .card-price {
+        font-size: 0.95em;
+        margin-left: 0;
+        margin-top: 5px;
+    }
+
+    .card-description {
+        font-size: 0.9em;
+        margin-bottom: 15px;
+    }
+
+    .order-btn {
+        padding: 10px 20px;
+        font-size: 0.9em;
+    }
+
+    .footer {
+        padding: 30px 15px;
+        font-size: 0.85em;
     }
 }
 /* Payment Popup Styles */
