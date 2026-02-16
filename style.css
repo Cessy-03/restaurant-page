@@ -435,12 +435,12 @@ body {
     }
 
     .home {
-        height: 100vh;
+        height: 70vh;
         padding-top: 0;
     }
 
     .bg-video {
-        height: 100vh;
+        height: 70vh;
     }
 
     .home-content h1 {
@@ -520,12 +520,12 @@ body {
     }
 
     .home {
-        height: 100vh;
+        height: 65vh;
         padding-top: 0;
     }
 
     .bg-video {
-        height: 100vh;
+        height: 65vh;
     }
 
     .logo {
