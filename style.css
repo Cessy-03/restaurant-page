@@ -38,7 +38,7 @@ body {
     color: #222;
 }
 .logo span {
-    color: #d46a2e; /* Warm food-themed accent */
+        color: #d46a2e;
 }
 
 .nav-links {
@@ -92,7 +92,7 @@ body {
     cursor: pointer;
 }
 
-/* RESPONSIVE */
+/* RESPONSIVE NAV */
 @media (max-width: 830px) {
     .hamburger {
         display: block;
@@ -101,25 +101,78 @@ body {
     .nav-links {
         position: fixed;
         top: 0;
-        right: -100%;
+        left: 50%;
+        transform: translateX(-50%);
         height: 100vh;
         width: 220px;
         background: rgba(255, 255, 255, 0.95) !important;
         flex-direction: column;
         padding-top: 100px;
         gap: 30px;
-        transition: 0.4s;
-        box-shadow: -2px 0 10px rgba(0,0,0,0.2);
+        align-items: center;
+        justify-content: flex-start;
+        transition: all 0.4s;
+        text-align: center;
+        opacity: 0;
+        visibility: hidden;
     }
 
     .nav-links a {
         color: #222 !important;
     }
 
+    .nav-links li {
+        width: 100%;
+        text-align: center;       /* ✅ centers each link */
+        display: flex;
+        justify-content: center;  /* ✅ centers the anchor inside */
+    }
+
+    .nav-links li a {
+        display: block;
+        width: 100%;
+        text-align: center;
+    }
+
     #menu-toggle:checked ~ .nav-links {
-        right: 0;
+        opacity: 1;
+        visibility: visible;
     }
 }
+
+/* Mobile Menu */
+.mobile-menu {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 85%;
+    max-width: 350px;
+    background: white;
+    padding: 30px 20px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    text-align: center;
+    z-index: 1000;
+    display: none;
+}
+
+.mobile-menu ul {
+    list-style: none;
+    padding: 0;
+}
+
+.mobile-menu li {
+    margin: 20px 0;
+}
+
+.mobile-menu a {
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 600;
+    color: #333;
+}
+
 .home {
     height: 100vh;
     width: 100%;
@@ -129,7 +182,7 @@ body {
     justify-content: center;
     align-items: center;
     color: #fff;
-    padding-top: 0;   /* removed the added offset */
+    padding-top: 0;
 }
 
 .bg-video {
@@ -137,7 +190,7 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100vh; /* restored full viewport height */
+    height: 100vh;
     object-fit: cover;
     display: block;
     z-index: -1;
@@ -175,6 +228,7 @@ body {
 .home-btn:hover {
     background: #bf5c22;
 }
+
 * {
     margin: 0;
     padding: 0;
@@ -190,16 +244,16 @@ body {
 }
 
 .header {
-    max-width: 760px;      /* made narrower */
+    max-width: 760px;
     margin: 100px auto 30px;
-    padding: 18px 20px;    /* reduced padding */
+    padding: 18px 20px;
     background: white;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
 
 .header .logo {
-    font-size: 1.6rem;     /* smaller header logo */
+    font-size: 1.6rem;
     font-weight: 300;
     letter-spacing: 2px;
     color: #2c2c2c;
@@ -215,7 +269,7 @@ body {
 }
 
 .container {
-    max-width: 1300px; /* increase overall content width */
+    max-width: 1300px;
     margin: 0 auto;
     padding: 30px 20px;
 }
@@ -268,9 +322,12 @@ body {
     border-radius: 10px;
 }
 
+/* =============================================
+   MENU CARD — FIXED: column layout by default
+   ============================================= */
 .menu-card {
-    min-width: 500px;
-    max-width: 500px;
+    min-width: 340px;
+    max-width: 340px;
     background: white;
     border-radius: 12px;
     overflow: hidden;
@@ -279,7 +336,7 @@ body {
     cursor: pointer;
     flex-shrink: 0;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;   /* ✅ FIXED: was 'row', now 'column' */
     align-items: stretch;
 }
 
@@ -288,10 +345,13 @@ body {
     box-shadow: 0 15px 40px rgba(184, 149, 106, 0.3);
 }
 
+/* =============================================
+   CARD IMAGE — FIXED: full width on top
+   ============================================= */
 .card-image-container {
-    width: 300px;
-    min-width: 300px;
-    height: 250px;
+    width: 100%;              /* ✅ FIXED: was 300px fixed */
+    min-width: unset;         /* ✅ FIXED: removed fixed min-width */
+    height: 260px;
     overflow: hidden;
     position: relative;
 }
@@ -308,10 +368,10 @@ body {
 }
 
 .card-content {
-    padding: 30px;
+    padding: 25px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     flex: 1;
 }
 
@@ -323,14 +383,14 @@ body {
 }
 
 .card-name {
-    font-size: 1.6em;
+    font-size: 1.4em;
     color: #2c2c2c;
     font-weight: 400;
     letter-spacing: 1px;
 }
 
 .card-price {
-    font-size: 1.4em;
+    font-size: 1.2em;
     color: #b8956a;
     font-weight: 600;
     white-space: nowrap;
@@ -382,7 +442,7 @@ body {
     font-size: 0.9em;
 }
 
-/* Make specific nav items bold: Home, Main Meal, Specials, Desserts, Drinks */
+/* Bold nav links */
 .nav-links li:nth-child(1) a,
 .nav-links li:nth-child(2) a,
 .nav-links li:nth-child(3) a,
@@ -391,6 +451,9 @@ body {
     font-weight: 700;
 }
 
+/* =============================================
+   TABLET (768px and below)
+   ============================================= */
 @media (max-width: 768px) {
     .logo {
         font-size: 2em;
@@ -416,19 +479,41 @@ body {
 
     .card-image-container {
         width: 100%;
-        height: 180px;
+        height: 200px;
         min-width: auto;
     }
 
     .card-name {
-        font-size: 1.4em;
+        font-size: 1.2em;
     }
 
     .card-price {
-        font-size: 1.2em;
+        font-size: 1em;
+    }
+
+    .cart-modal-content {
+        width: 95%;
+        padding: 20px;
+    }
+
+    .payment-options {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-actions {
+        flex-direction: column;
+    }
+
+    .order-popup {
+        right: 10px;
+        left: 10px;
+        width: auto;
     }
 }
 
+/* =============================================
+   MOBILE (600px and below)
+   ============================================= */
 @media (max-width: 600px) {
     .navbar {
         padding: 15px 20px;
@@ -522,6 +607,9 @@ body {
     }
 }
 
+/* =============================================
+   SMALL MOBILE (480px and below)
+   ============================================= */
 @media (max-width: 480px) {
     .navbar {
         padding: 12px 12px;
@@ -653,6 +741,7 @@ body {
         font-size: 0.85em;
     }
 }
+
 /* Payment Popup Styles */
 .order-popup {
     position: fixed;
@@ -773,7 +862,6 @@ body {
     color: #2c2c2c;
 }
 
-/* Cart Items */
 .cart-items-container {
     max-height: 200px;
     overflow-y: auto;
@@ -838,7 +926,6 @@ body {
     background: #cc0000;
 }
 
-/* Cart Total */
 .cart-total {
     display: flex;
     justify-content: space-between;
@@ -854,7 +941,6 @@ body {
     color: #b8956a;
 }
 
-/* Delivery Information */
 .delivery-info {
     margin-bottom: 20px;
 }
@@ -880,7 +966,6 @@ body {
     resize: vertical;
 }
 
-/* Payment Methods */
 .payment-methods {
     margin-bottom: 20px;
 }
@@ -924,7 +1009,6 @@ body {
     font-size: 2em;
 }
 
-/* Modal Action Buttons */
 .modal-actions {
     display: flex;
     gap: 10px;
@@ -963,443 +1047,6 @@ body {
     background: #e0e0e0;
 }
 
-/* Payment Form */
-.payment-form {
-    padding: 20px 0;
-}
-
-.payment-instruction {
-    text-align: center;
-    color: #666;
-    margin-bottom: 20px;
-}
-
-.payment-amount-display {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
-    background: #f9f9f9;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    font-size: 1.3em;
-    font-weight: bold;
-}
-
-.payment-amount-display .amount {
-    color: #b8956a;
-}
-
-.payment-input {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 1em;
-    font-family: Arial, sans-serif;
-}
-
-/* Processing Modal */
-.processing-content {
-    text-align: center;
-    padding: 40px;
-}
-
-.spinner {
-    width: 60px;
-    height: 60px;
-    border: 4px solid #f0f0f0;
-    border-top: 4px solid #b8956a;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin: 0 auto 20px;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-/* Success Modal */
-.success-content {
-    text-align: center;
-}
-
-.success-icon {
-    width: 80px;
-    height: 80px;
-    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 3em;
-    margin: 0 auto 20px;
-}
-
-.success-message {
-    font-size: 1.2em;
-    color: #666;
-    margin-bottom: 20px;
-}
-
-.order-summary {
-    background: #f9f9f9;
-    padding: 20px;
-    border-radius: 8px;
-    margin: 20px 0;
-    text-align: left;
-}
-
-.order-summary h3 {
-    margin-bottom: 10px;
-    color: #2c2c2c;
-}
-
-.order-summary p {
-    margin: 5px 0;
-    color: #666;
-}
-
-.delivery-estimate {
-    color: #b8956a;
-    font-weight: bold;
-    margin: 20px 0;
-}
-
-/* Mobile Responsive */
-@media (max-width: 768px) {
-    .cart-modal-content {
-        width: 95%;
-        padding: 20px;
-    }
-    
-    .payment-options {
-        grid-template-columns: 1fr;
-    }
-    
-    .modal-actions {
-        flex-direction: column;
-    }
-    
-    .order-popup {
-        right: 10px;
-        left: 10px;
-        width: auto;
-    }
-}
-/* Payment Popup Styles */
-.order-popup {
-    position: fixed;
-    top: 100px;
-    right: 20px;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-    padding: 20px 30px;
-    z-index: 10000;
-    opacity: 0;
-    transform: translateX(400px);
-    transition: all 0.3s ease;
-}
-
-.order-popup.show {
-    opacity: 1;
-    transform: translateX(0);
-}
-
-.popup-content {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.popup-icon {
-    width: 40px;
-    height: 40px;
-    background: linear-gradient(135deg, #b8956a 0%, #d4af7a 100%);
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    font-weight: bold;
-}
-
-.popup-content h3 {
-    margin: 0;
-    color: #2c2c2c;
-    font-size: 1.2em;
-}
-
-.popup-content p {
-    margin: 5px 0 0 0;
-    color: #666;
-    font-size: 0.95em;
-}
-
-/* Cart Modal Styles */
-.cart-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10000;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.cart-modal.show {
-    opacity: 1;
-}
-
-.cart-modal-content {
-    background: white;
-    border-radius: 16px;
-    width: 90%;
-    max-width: 600px;
-    max-height: 90vh;
-    overflow-y: auto;
-    padding: 30px;
-    transform: scale(0.9);
-    transition: transform 0.3s ease;
-}
-
-.cart-modal.show .cart-modal-content {
-    transform: scale(1);
-}
-
-.cart-modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    padding-bottom: 15px;
-    border-bottom: 2px solid #f0f0f0;
-}
-
-.cart-modal-header h2 {
-    margin: 0;
-    color: #2c2c2c;
-    font-size: 1.8em;
-}
-
-.close-modal {
-    background: none;
-    border: none;
-    font-size: 2em;
-    color: #666;
-    cursor: pointer;
-    padding: 0;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.close-modal:hover {
-    color: #2c2c2c;
-}
-
-/* Cart Items */
-.cart-items-container {
-    max-height: 200px;
-    overflow-y: auto;
-    margin-bottom: 20px;
-}
-
-.cart-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px;
-    border-bottom: 1px solid #f0f0f0;
-}
-
-.cart-item-details {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
-
-.cart-item-name {
-    font-size: 1.1em;
-    color: #2c2c2c;
-}
-
-.cart-item-quantity {
-    background: #f5f5f5;
-    padding: 3px 10px;
-    border-radius: 15px;
-    font-size: 0.9em;
-    color: #666;
-}
-
-.cart-item-actions {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.cart-item-price {
-    font-size: 1.2em;
-    color: #b8956a;
-    font-weight: 600;
-}
-
-.remove-item {
-    background: #ff4444;
-    color: white;
-    border: none;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    font-size: 1.5em;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 1;
-}
-
-.remove-item:hover {
-    background: #cc0000;
-}
-
-/* Cart Total */
-.cart-total {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
-    background: #f9f9f9;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    font-size: 1.3em;
-    font-weight: bold;
-}
-
-.total-amount {
-    color: #b8956a;
-}
-
-/* Delivery Information */
-.delivery-info {
-    margin-bottom: 20px;
-}
-
-.delivery-info h3 {
-    margin-bottom: 15px;
-    color: #2c2c2c;
-}
-
-.delivery-info input,
-.delivery-info textarea {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 1em;
-    font-family: Arial, sans-serif;
-}
-
-.delivery-info textarea {
-    min-height: 80px;
-    resize: vertical;
-}
-
-/* Payment Methods */
-.payment-methods {
-    margin-bottom: 20px;
-}
-
-.payment-methods h3 {
-    margin-bottom: 15px;
-    color: #2c2c2c;
-}
-
-.payment-options {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 10px;
-}
-
-.payment-btn {
-    padding: 15px;
-    border: 2px solid #ddd;
-    background: white;
-    border-radius: 8px;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.3s ease;
-}
-
-.payment-btn:hover {
-    border-color: #b8956a;
-    background: #f9f9f9;
-}
-
-.payment-btn.active {
-    border-color: #b8956a;
-    background: linear-gradient(135deg, #b8956a 0%, #d4af7a 100%);
-    color: white;
-}
-
-.payment-icon {
-    font-size: 2em;
-}
-
-/* Modal Action Buttons */
-.modal-actions {
-    display: flex;
-    gap: 10px;
-}
-
-.btn-primary,
-.btn-secondary {
-    flex: 1;
-    padding: 15px;
-    border: none;
-    border-radius: 50px;
-    font-size: 1.1em;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-family: Arial, sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.btn-primary {
-    background: linear-gradient(135deg, #b8956a 0%, #d4af7a 100%);
-    color: white;
-}
-
-.btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 20px rgba(184, 149, 106, 0.4);
-}
-
-.btn-secondary {
-    background: #f5f5f5;
-    color: #2c2c2c;
-}
-
-.btn-secondary:hover {
-    background: #e0e0e0;
-}
-
-/* Payment Form */
 .payment-form {
     padding: 20px 0;
 }
@@ -1446,17 +1093,6 @@ body {
     border: 1px solid #c8e6c9;
 }
 
-.payment-note {
-    background: #e8f5e9;
-    color: #2e7d32;
-    padding: 12px;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    font-size: 0.95em;
-    text-align: center;
-}
-
-/* Processing Modal */
 .processing-content {
     text-align: center;
     padding: 40px;
@@ -1477,7 +1113,6 @@ body {
     100% { transform: rotate(360deg); }
 }
 
-/* Success Modal */
 .success-content {
     text-align: center;
 }
@@ -1523,71 +1158,6 @@ body {
     color: #b8956a;
     font-weight: bold;
     margin: 20px 0;
-}
-
-/* Mobile Responsive */
-@media (max-width: 768px) {
-   
-    body {
-        font-size: 16px;
     }
 
-    header, .main-content, footer {
-        padding: 10px;
-        width: 95%;
-        margin: 0 auto;
-    }
-
-   
-    nav {
-        position: relative;
-    }
-
-    nav ul {
-        display: none; 
-        flex-direction: column;
-        gap: 15px;
-        list-style: none;
-        background-color: #fff; 
-        padding: 10px;
-        border-radius: 8px;
-    }
-
-    nav ul li a {
-        color: #333; 
-        text-decoration: none;
-        font-weight: 500;
-    }
-
-   
-    .hamburger-menu {
-        display: block;
-        cursor: pointer;
-    }
-
-    
-    nav.active ul {
-        display: flex;
-    }
-
-    
-    .cart-modal-content {
-        width: 95%;
-        padding: 20px;
-    }
-
-    .payment-options {
-        grid-template-columns: 1fr;
-    }
-
-    .modal-actions {
-        flex-direction: column;
-    }
-
-    .order-popup {
-        right: 10px;
-        left: 10px;
-        width: auto;
-    }
-}
 
